@@ -58,6 +58,12 @@ class ProductController extends BaseController{
 		if($fieldname){
 			$db->where($fieldname , $fieldvalue); //filter by a single field name
 		}
+		if(!empty($request->product_product_sel_price)){
+			$vals = explode("-", str_replace(" ", "", $request->product_product_sel_price));
+			$from = $vals[0];
+			$to = $vals[1];
+			$db->where("product.product_sel_price BETWEEN $from AND $to");
+		}
 		$tc = $db->withTotalCount();
 		$records = $db->get($tablename, $pagination, $fields);
 		$records_count = count($records);

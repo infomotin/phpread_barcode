@@ -99,231 +99,277 @@ $show_pagination = $this->show_pagination;
         <div  class="">
             <div class="container-fluid">
                 <div class="row ">
-                    <div class="col-md-12 comp-grid">
-                        <?php $this :: display_page_errors(); ?>
-                        <div  class=" animated fadeIn page-content">
-                            <div id="product-list-records">
-                                <div id="page-report-body" class="table-responsive">
-                                    <table class="table  table-striped table-sm text-left">
-                                        <thead class="table-header bg-light">
-                                            <tr>
-                                                <th class="td-checkbox">
-                                                    <label class="custom-control custom-checkbox custom-control-inline">
-                                                        <input class="toggle-check-all custom-control-input" type="checkbox" />
-                                                        <span class="custom-control-label"></span>
-                                                    </label>
-                                                </th>
-                                                <th class="td-sno">#</th>
-                                                <th  class="td-product_number"> Product Number</th>
-                                                <th  class="td-product_name"> Product Name</th>
-                                                <th  class="td-product_desc"> Product Desc</th>
-                                                <th  class="td-product_stock_lavel"> Product Stock Lavel</th>
-                                                <th  class="td-product_buy_price"> Product Buy Price</th>
-                                                <th  class="td-product_sel_price"> Product Sel Price</th>
-                                                <th class="td-btn"></th>
-                                            </tr>
-                                        </thead>
-                                        <?php
-                                        if(!empty($records)){
-                                        ?>
-                                        <tbody class="page-data" id="page-data-<?php echo $page_element_id; ?>">
-                                            <!--record-->
-                                            <?php
-                                            $counter = 0;
-                                            foreach($records as $data){
-                                            $rec_id = (!empty($data['id']) ? urlencode($data['id']) : null);
-                                            $counter++;
-                                            ?>
-                                            <tr>
-                                                <th class=" td-checkbox">
-                                                    <label class="custom-control custom-checkbox custom-control-inline">
-                                                        <input class="optioncheck custom-control-input" name="optioncheck[]" value="<?php echo $data['id'] ?>" type="checkbox" />
+                    <div class="col-sm-3 comp-grid">
+                        <form method="get" action="<?php print_link($current_page) ?>" class="form filter-form">
+                            <div class="card mb-3">
+                                <div class="card-header h4 h4">Filter by Product Product Sel Price</div>
+                                <div class="p-2">
+                                    <?php 
+                                    $to = 10;
+                                    $from = 0;
+                                    if(!empty($_GET['product_product_sel_price'])){
+                                    $range = explode('-', get_value('product_product_sel_price'));
+                                    $from = $range[0];
+                                    $to = (!empty($range[1]) ? $range[1] : null);
+                                    }
+                                    ?>
+                                    <input class="ion-range" type="text" data-from="<?php echo $from ?>" data-to="<?php echo $to ?>" data-force_edge="true" data-prefix="" data-postfix=""  name="product_product_sel_price" data-step="10" data-type="double" data-min="0"   data-max="100"   data-grid="true" data-grid-snap="true" /> 
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group text-center">
+                                    <button class="btn btn-primary">Filter</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-9 comp-grid">
+                            <?php $this :: display_page_errors(); ?>
+                            <div class="filter-tags mb-2">
+                                <?php
+                                if(!empty(get_value('product_product_sel_price'))){
+                                ?>
+                                <div class="filter-chip card bg-light">
+                                    <b>Product Product Sel Price :</b> 
+                                    <?php 
+                                    if(get_value('product_product_sel_pricelabel')){
+                                    echo get_value('product_product_sel_pricelabel');
+                                    }
+                                    else{
+                                    echo get_value('product_product_sel_price');
+                                    }
+                                    $remove_link = unset_get_value('product_product_sel_price', $this->route->page_url);
+                                    ?>
+                                    <a href="<?php print_link($remove_link); ?>" class="close-btn">
+                                        &times;
+                                    </a>
+                                </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div  class=" animated fadeIn page-content">
+                                <div id="product-list-records">
+                                    <div id="page-report-body" class="table-responsive">
+                                        <table class="table  table-striped table-sm text-left">
+                                            <thead class="table-header bg-light">
+                                                <tr>
+                                                    <th class="td-checkbox">
+                                                        <label class="custom-control custom-checkbox custom-control-inline">
+                                                            <input class="toggle-check-all custom-control-input" type="checkbox" />
                                                             <span class="custom-control-label"></span>
                                                         </label>
                                                     </th>
-                                                    <th class="td-sno"><?php echo $counter; ?></th>
-                                                    <td class="td-product_number"> <span><svg id="barcode<?php echo $counter; ?>"></svg></span>
-                                                        <script>
-                                                            JsBarcode("#barcode<?php echo $counter; ?>", "<?php echo $data['product_number'].$counter; ?>", {
-                                                            format: "CODE128",
-                                                            //   lineColor: "#0aa",
-                                                            width: 3,
-                                                            height: 15,
-                                                            displayValue: true
-                                                            });
-                                                        </script></td>
-                                                        <td class="td-product_name">
-                                                            <span  data-value="<?php echo $data['product_name']; ?>" 
-                                                                data-pk="<?php echo $data['id'] ?>" 
-                                                                data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
-                                                                data-name="product_name" 
-                                                                data-title="Enter Product Name" 
-                                                                data-placement="left" 
-                                                                data-toggle="click" 
-                                                                data-type="text" 
-                                                                data-mode="popover" 
-                                                                data-showbuttons="left" 
-                                                                class="is-editable" >
-                                                                <?php echo $data['product_name']; ?> 
-                                                            </span>
-                                                        </td>
-                                                        <td class="td-product_desc">
-                                                            <span  data-pk="<?php echo $data['id'] ?>" 
-                                                                data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
-                                                                data-name="product_desc" 
-                                                                data-title="Enter Product Desc" 
-                                                                data-placement="left" 
-                                                                data-toggle="click" 
-                                                                data-type="textarea" 
-                                                                data-mode="popover" 
-                                                                data-showbuttons="left" 
-                                                                class="is-editable" >
-                                                                <?php echo $data['product_desc']; ?> 
-                                                            </span>
-                                                        </td>
-                                                        <td class="td-product_stock_lavel">
-                                                            <span  data-value="<?php echo $data['product_stock_lavel']; ?>" 
-                                                                data-pk="<?php echo $data['id'] ?>" 
-                                                                data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
-                                                                data-name="product_stock_lavel" 
-                                                                data-title="Enter Product Stock Lavel" 
-                                                                data-placement="left" 
-                                                                data-toggle="click" 
-                                                                data-type="number" 
-                                                                data-mode="popover" 
-                                                                data-showbuttons="left" 
-                                                                class="is-editable" >
-                                                                <?php echo $data['product_stock_lavel']; ?> 
-                                                            </span>
-                                                        </td>
-                                                        <td class="td-product_buy_price">
-                                                            <span  data-step="0.1" 
-                                                                data-value="<?php echo $data['product_buy_price']; ?>" 
-                                                                data-pk="<?php echo $data['id'] ?>" 
-                                                                data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
-                                                                data-name="product_buy_price" 
-                                                                data-title="Enter Product Buy Price" 
-                                                                data-placement="left" 
-                                                                data-toggle="click" 
-                                                                data-type="number" 
-                                                                data-mode="popover" 
-                                                                data-showbuttons="left" 
-                                                                class="is-editable" >
-                                                                <?php echo $data['product_buy_price']; ?> 
-                                                            </span>
-                                                        </td>
-                                                        <td class="td-product_sel_price">
-                                                            <span  data-step="0.1" 
-                                                                data-value="<?php echo $data['product_sel_price']; ?>" 
-                                                                data-pk="<?php echo $data['id'] ?>" 
-                                                                data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
-                                                                data-name="product_sel_price" 
-                                                                data-title="Enter Product Sel Price" 
-                                                                data-placement="left" 
-                                                                data-toggle="click" 
-                                                                data-type="number" 
-                                                                data-mode="popover" 
-                                                                data-showbuttons="left" 
-                                                                class="is-editable" >
-                                                                <?php echo $data['product_sel_price']; ?> 
-                                                            </span>
-                                                        </td>
-                                                        <th class="td-btn">
-                                                            <a class="btn btn-sm btn-success has-tooltip" title="View Record" href="<?php print_link("product/view/$rec_id"); ?>">
-                                                                <i class="fa fa-eye"></i> View
-                                                            </a>
-                                                            <a class="btn btn-sm btn-info has-tooltip" title="Edit This Record" href="<?php print_link("product/edit/$rec_id"); ?>">
-                                                                <i class="fa fa-edit"></i> Edit
-                                                            </a>
-                                                            <a class="btn btn-sm btn-danger has-tooltip record-delete-btn" title="Delete this record" href="<?php print_link("product/delete/$rec_id/?csrf_token=$csrf_token&redirect=$current_page"); ?>" data-prompt-msg="Are you sure you want to delete this record?" data-display-style="modal">
-                                                                <i class="fa fa-times"></i>
-                                                                Delete
-                                                            </a>
+                                                    <th class="td-sno">#</th>
+                                                    <th  class="td-product_number"> Product Number</th>
+                                                    <th  class="td-product_name"> Product Name</th>
+                                                    <th  class="td-product_desc"> Product Desc</th>
+                                                    <th  class="td-product_stock_lavel"> Product Stock Lavel</th>
+                                                    <th  class="td-product_buy_price"> Product Buy Price</th>
+                                                    <th  class="td-product_sel_price"> Product Sel Price</th>
+                                                    <th class="td-btn"></th>
+                                                </tr>
+                                            </thead>
+                                            <?php
+                                            if(!empty($records)){
+                                            ?>
+                                            <tbody class="page-data" id="page-data-<?php echo $page_element_id; ?>">
+                                                <!--record-->
+                                                <?php
+                                                $counter = 0;
+                                                foreach($records as $data){
+                                                $rec_id = (!empty($data['id']) ? urlencode($data['id']) : null);
+                                                $counter++;
+                                                ?>
+                                                <tr>
+                                                    <th class=" td-checkbox">
+                                                        <label class="custom-control custom-checkbox custom-control-inline">
+                                                            <input class="optioncheck custom-control-input" name="optioncheck[]" value="<?php echo $data['id'] ?>" type="checkbox" />
+                                                                <span class="custom-control-label"></span>
+                                                            </label>
                                                         </th>
-                                                    </tr>
-                                                    <?php 
+                                                        <th class="td-sno"><?php echo $counter; ?></th>
+                                                        <td class="td-product_number"> <span><svg id="barcode<?php echo $counter; ?>"></svg></span>
+                                                            <script>
+                                                                JsBarcode("#barcode<?php echo $counter; ?>", "<?php echo $data['product_number'].$counter; ?>", {
+                                                                format: "CODE128",
+                                                                //   lineColor: "#0aa",
+                                                                width: 3,
+                                                                height: 15,
+                                                                displayValue: true
+                                                                });
+                                                            </script></td>
+                                                            <td class="td-product_name">
+                                                                <span  data-value="<?php echo $data['product_name']; ?>" 
+                                                                    data-pk="<?php echo $data['id'] ?>" 
+                                                                    data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
+                                                                    data-name="product_name" 
+                                                                    data-title="Enter Product Name" 
+                                                                    data-placement="left" 
+                                                                    data-toggle="click" 
+                                                                    data-type="text" 
+                                                                    data-mode="popover" 
+                                                                    data-showbuttons="left" 
+                                                                    class="is-editable" >
+                                                                    <?php echo $data['product_name']; ?> 
+                                                                </span>
+                                                            </td>
+                                                            <td class="td-product_desc">
+                                                                <span  data-pk="<?php echo $data['id'] ?>" 
+                                                                    data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
+                                                                    data-name="product_desc" 
+                                                                    data-title="Enter Product Desc" 
+                                                                    data-placement="left" 
+                                                                    data-toggle="click" 
+                                                                    data-type="textarea" 
+                                                                    data-mode="popover" 
+                                                                    data-showbuttons="left" 
+                                                                    class="is-editable" >
+                                                                    <?php echo $data['product_desc']; ?> 
+                                                                </span>
+                                                            </td>
+                                                            <td class="td-product_stock_lavel">
+                                                                <span  data-value="<?php echo $data['product_stock_lavel']; ?>" 
+                                                                    data-pk="<?php echo $data['id'] ?>" 
+                                                                    data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
+                                                                    data-name="product_stock_lavel" 
+                                                                    data-title="Enter Product Stock Lavel" 
+                                                                    data-placement="left" 
+                                                                    data-toggle="click" 
+                                                                    data-type="number" 
+                                                                    data-mode="popover" 
+                                                                    data-showbuttons="left" 
+                                                                    class="is-editable" >
+                                                                    <?php echo $data['product_stock_lavel']; ?> 
+                                                                </span>
+                                                            </td>
+                                                            <td class="td-product_buy_price">
+                                                                <span  data-step="0.1" 
+                                                                    data-value="<?php echo $data['product_buy_price']; ?>" 
+                                                                    data-pk="<?php echo $data['id'] ?>" 
+                                                                    data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
+                                                                    data-name="product_buy_price" 
+                                                                    data-title="Enter Product Buy Price" 
+                                                                    data-placement="left" 
+                                                                    data-toggle="click" 
+                                                                    data-type="number" 
+                                                                    data-mode="popover" 
+                                                                    data-showbuttons="left" 
+                                                                    class="is-editable" >
+                                                                    <?php echo $data['product_buy_price']; ?> 
+                                                                </span>
+                                                            </td>
+                                                            <td class="td-product_sel_price">
+                                                                <span  data-step="0.1" 
+                                                                    data-value="<?php echo $data['product_sel_price']; ?>" 
+                                                                    data-pk="<?php echo $data['id'] ?>" 
+                                                                    data-url="<?php print_link("product/editfield/" . urlencode($data['id'])); ?>" 
+                                                                    data-name="product_sel_price" 
+                                                                    data-title="Enter Product Sel Price" 
+                                                                    data-placement="left" 
+                                                                    data-toggle="click" 
+                                                                    data-type="number" 
+                                                                    data-mode="popover" 
+                                                                    data-showbuttons="left" 
+                                                                    class="is-editable" >
+                                                                    <?php echo $data['product_sel_price']; ?> 
+                                                                </span>
+                                                            </td>
+                                                            <th class="td-btn">
+                                                                <a class="btn btn-sm btn-success has-tooltip" title="View Record" href="<?php print_link("product/view/$rec_id"); ?>">
+                                                                    <i class="fa fa-eye"></i> View
+                                                                </a>
+                                                                <a class="btn btn-sm btn-info has-tooltip" title="Edit This Record" href="<?php print_link("product/edit/$rec_id"); ?>">
+                                                                    <i class="fa fa-edit"></i> Edit
+                                                                </a>
+                                                                <a class="btn btn-sm btn-danger has-tooltip record-delete-btn" title="Delete this record" href="<?php print_link("product/delete/$rec_id/?csrf_token=$csrf_token&redirect=$current_page"); ?>" data-prompt-msg="Are you sure you want to delete this record?" data-display-style="modal">
+                                                                    <i class="fa fa-times"></i>
+                                                                    Delete
+                                                                </a>
+                                                            </th>
+                                                        </tr>
+                                                        <?php 
+                                                        }
+                                                        ?>
+                                                        <!--endrecord-->
+                                                    </tbody>
+                                                    <tbody class="search-data" id="search-data-<?php echo $page_element_id; ?>"></tbody>
+                                                    <?php
                                                     }
                                                     ?>
-                                                    <!--endrecord-->
-                                                </tbody>
-                                                <tbody class="search-data" id="search-data-<?php echo $page_element_id; ?>"></tbody>
+                                                </table>
+                                                <?php 
+                                                if(empty($records)){
+                                                ?>
+                                                <h4 class="bg-light text-center border-top text-muted animated bounce  p-3">
+                                                    <i class="fa fa-ban"></i> No record found
+                                                </h4>
                                                 <?php
                                                 }
                                                 ?>
-                                            </table>
-                                            <?php 
-                                            if(empty($records)){
-                                            ?>
-                                            <h4 class="bg-light text-center border-top text-muted animated bounce  p-3">
-                                                <i class="fa fa-ban"></i> No record found
-                                            </h4>
+                                            </div>
                                             <?php
-                                            }
+                                            if( $show_footer && !empty($records)){
                                             ?>
-                                        </div>
-                                        <?php
-                                        if( $show_footer && !empty($records)){
-                                        ?>
-                                        <div class=" border-top mt-2">
-                                            <div class="row justify-content-center">    
-                                                <div class="col-md-auto justify-content-center">    
-                                                    <div class="p-3 d-flex justify-content-between">    
-                                                        <button data-prompt-msg="Are you sure you want to delete these records?" data-display-style="modal" data-url="<?php print_link("product/delete/{sel_ids}/?csrf_token=$csrf_token&redirect=$current_page"); ?>" class="btn btn-sm btn-danger btn-delete-selected d-none">
-                                                            <i class="fa fa-times"></i> Delete Selected
-                                                        </button>
-                                                        <div class="dropup export-btn-holder mx-1">
-                                                            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="fa fa-save"></i> Export
+                                            <div class=" border-top mt-2">
+                                                <div class="row justify-content-center">    
+                                                    <div class="col-md-auto justify-content-center">    
+                                                        <div class="p-3 d-flex justify-content-between">    
+                                                            <button data-prompt-msg="Are you sure you want to delete these records?" data-display-style="modal" data-url="<?php print_link("product/delete/{sel_ids}/?csrf_token=$csrf_token&redirect=$current_page"); ?>" class="btn btn-sm btn-danger btn-delete-selected d-none">
+                                                                <i class="fa fa-times"></i> Delete Selected
                                                             </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <?php $export_print_link = $this->set_current_page_link(array('format' => 'print')); ?>
-                                                                <a class="dropdown-item export-link-btn" data-format="print" href="<?php print_link($export_print_link); ?>" target="_blank">
-                                                                    <img src="<?php print_link('assets/images/print.png') ?>" class="mr-2" /> PRINT
-                                                                    </a>
-                                                                    <?php $export_pdf_link = $this->set_current_page_link(array('format' => 'pdf')); ?>
-                                                                    <a class="dropdown-item export-link-btn" data-format="pdf" href="<?php print_link($export_pdf_link); ?>" target="_blank">
-                                                                        <img src="<?php print_link('assets/images/pdf.png') ?>" class="mr-2" /> PDF
+                                                            <div class="dropup export-btn-holder mx-1">
+                                                                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="fa fa-save"></i> Export
+                                                                </button>
+                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                    <?php $export_print_link = $this->set_current_page_link(array('format' => 'print')); ?>
+                                                                    <a class="dropdown-item export-link-btn" data-format="print" href="<?php print_link($export_print_link); ?>" target="_blank">
+                                                                        <img src="<?php print_link('assets/images/print.png') ?>" class="mr-2" /> PRINT
                                                                         </a>
-                                                                        <?php $export_word_link = $this->set_current_page_link(array('format' => 'word')); ?>
-                                                                        <a class="dropdown-item export-link-btn" data-format="word" href="<?php print_link($export_word_link); ?>" target="_blank">
-                                                                            <img src="<?php print_link('assets/images/doc.png') ?>" class="mr-2" /> WORD
+                                                                        <?php $export_pdf_link = $this->set_current_page_link(array('format' => 'pdf')); ?>
+                                                                        <a class="dropdown-item export-link-btn" data-format="pdf" href="<?php print_link($export_pdf_link); ?>" target="_blank">
+                                                                            <img src="<?php print_link('assets/images/pdf.png') ?>" class="mr-2" /> PDF
                                                                             </a>
-                                                                            <?php $export_csv_link = $this->set_current_page_link(array('format' => 'csv')); ?>
-                                                                            <a class="dropdown-item export-link-btn" data-format="csv" href="<?php print_link($export_csv_link); ?>" target="_blank">
-                                                                                <img src="<?php print_link('assets/images/csv.png') ?>" class="mr-2" /> CSV
+                                                                            <?php $export_word_link = $this->set_current_page_link(array('format' => 'word')); ?>
+                                                                            <a class="dropdown-item export-link-btn" data-format="word" href="<?php print_link($export_word_link); ?>" target="_blank">
+                                                                                <img src="<?php print_link('assets/images/doc.png') ?>" class="mr-2" /> WORD
                                                                                 </a>
-                                                                                <?php $export_excel_link = $this->set_current_page_link(array('format' => 'excel')); ?>
-                                                                                <a class="dropdown-item export-link-btn" data-format="excel" href="<?php print_link($export_excel_link); ?>" target="_blank">
-                                                                                    <img src="<?php print_link('assets/images/xsl.png') ?>" class="mr-2" /> EXCEL
+                                                                                <?php $export_csv_link = $this->set_current_page_link(array('format' => 'csv')); ?>
+                                                                                <a class="dropdown-item export-link-btn" data-format="csv" href="<?php print_link($export_csv_link); ?>" target="_blank">
+                                                                                    <img src="<?php print_link('assets/images/csv.png') ?>" class="mr-2" /> CSV
                                                                                     </a>
+                                                                                    <?php $export_excel_link = $this->set_current_page_link(array('format' => 'excel')); ?>
+                                                                                    <a class="dropdown-item export-link-btn" data-format="excel" href="<?php print_link($export_excel_link); ?>" target="_blank">
+                                                                                        <img src="<?php print_link('assets/images/xsl.png') ?>" class="mr-2" /> EXCEL
+                                                                                        </a>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col">   
-                                                                        <?php
-                                                                        if($show_pagination == true){
-                                                                        $pager = new Pagination($total_records, $record_count);
-                                                                        $pager->route = $this->route;
-                                                                        $pager->show_page_count = true;
-                                                                        $pager->show_record_count = true;
-                                                                        $pager->show_page_limit =true;
-                                                                        $pager->limit_count = $this->limit_count;
-                                                                        $pager->show_page_number_list = true;
-                                                                        $pager->pager_link_range=5;
-                                                                        $pager->render();
-                                                                        }
-                                                                        ?>
+                                                                        <div class="col">   
+                                                                            <?php
+                                                                            if($show_pagination == true){
+                                                                            $pager = new Pagination($total_records, $record_count);
+                                                                            $pager->route = $this->route;
+                                                                            $pager->show_page_count = true;
+                                                                            $pager->show_record_count = true;
+                                                                            $pager->show_page_limit =true;
+                                                                            $pager->limit_count = $this->limit_count;
+                                                                            $pager->show_page_number_list = true;
+                                                                            $pager->pager_link_range=5;
+                                                                            $pager->render();
+                                                                            }
+                                                                            ?>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+                                                                <?php
+                                                                }
+                                                                ?>
                                                             </div>
-                                                            <?php
-                                                            }
-                                                            ?>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </section>
+                                    </section>

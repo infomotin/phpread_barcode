@@ -1,4 +1,5 @@
 function initFormPlugins(){
+	$(".ion-range").ionRangeSlider({input_values_separator:'-'});
 }
 function loadPageData(ajaxPage, url){
 	let pageType = ajaxPage.data('page-type');

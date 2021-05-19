@@ -29,7 +29,7 @@
 		</style>
 	</head>
 	<body style="padding-top:50px;">
-		<nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+		<nav class="navbar navbar-expand-lg bg-white navbar-light fixed-top">
 			<a class="navbar-brand" href="<?php print_link('') ?>">
 				<img class="img-responsive" src="<?php print_link(SITE_LOGO); ?>" /> 
 				<?php echo SITE_NAME ?>

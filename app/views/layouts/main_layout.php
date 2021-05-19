@@ -29,6 +29,8 @@
 		?>
 		<?php
 			Html ::  page_css('bootstrap-editable.css');
+				Html ::  page_css('ion.rangeSlider.css');
+				Html ::  page_css('ion.rangeSlider.skinHTML5.css');
 			Html ::  page_js('jquery-3.3.1.min.js');
 		?>
 	</head>
@@ -125,6 +127,7 @@
 		?>
 		<?php
 			Html ::  page_js('bootstrap-editable.js');
+			Html ::  page_js('ion.rangeSlider.min.js');
 			Html ::  page_js('plugins.js'); //boostrapswitch, passwordStrength, twbs-pagination, blueimp-gallery,
 			Html ::  page_js('plugins-init.js');
 			Html ::  page_js('page-scripts.js');
