@@ -2,7 +2,8 @@
 	session_start(); // Start or Resume Session
 	
 	require('config.php');
-	
+	// for testing 
+	echo SITE_ADDR;
 	//composer auto load libraries
 	require ('vendor/autoload.php');
 
@@ -71,17 +72,20 @@
 	}
 	
 	// Register Autoloaders
+	//calling functions 
 	spl_autoload_register("autoloadModel");
 	spl_autoload_register("autoloadController");
 	spl_autoload_register("autoloadLibrary");
 	spl_autoload_register("autoloadHelper");
 	
 	
-	
+	//whey that needs , its also load from auto loder functions 
 	//Initialize Global Functions Helpers
 	require(HELPERS_DIR . 'Functions.php');
 
+	//autoloadHelper
 	$lang = new Lang;// Initialize language class and load default language phrases
+	//autoloadLibrary
 	$csrf = new Csrf;// Initialize Csrf class and generate new application token
 	$csrf_token = $csrf::$token; 
 	

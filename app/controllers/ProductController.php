@@ -64,6 +64,14 @@ class ProductController extends BaseController{
 			$to = $vals[1];
 			$db->where("product.product_sel_price BETWEEN $from AND $to");
 		}
+		if(!empty($request->product_product_stock_lavel)){
+			$val = $request->product_product_stock_lavel;
+			$db->where("product.product_stock_lavel", $val , "=");
+		}
+		if(!empty($request->product_product_buy_price)){
+			$val = $request->product_product_buy_price;
+			$db->where("product.product_buy_price", $val , "=");
+		}
 		$tc = $db->withTotalCount();
 		$records = $db->get($tablename, $pagination, $fields);
 		$records_count = count($records);
@@ -142,6 +150,7 @@ class ProductController extends BaseController{
 			//fillable fields
 			$fields = $this->fields = array("product_number","product_name","product_desc","product_stock_lavel","product_buy_price","product_sel_price");
 			$postdata = $this->format_request_data($formdata);
+			$this->validate_captcha = true; //will check for captcha validation
 			$this->rules_array = array(
 				'product_name' => 'required',
 				'product_desc' => 'required',

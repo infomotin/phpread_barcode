@@ -11,6 +11,8 @@
  * @param $field Get particular field value of the active user  otherwise return array of active user fields 
  * @return string | array
  */
+
+
 function get_active_user($field = null, $default_value = null)
 {
 	if (!empty($field)) {
@@ -23,6 +25,9 @@ function get_active_user($field = null, $default_value = null)
 		return get_session('user_data');
 	}
 }
+
+
+
 
 function slugify($text)
 {
@@ -45,6 +50,10 @@ function slugify($text)
 	$text = strtolower($text);
 	return $text;
 }
+
+
+
+
 
 /**
  * Convert a multi-dimensional, associative array to CSV data
