@@ -33,7 +33,7 @@ class BaseView
 	 * Current page limit count
 	 * @var  int
 	 */
-	public $limit_count = MAX_RECORD_COUNT;
+	public $limit_count = MAX_RECORD_COUNT; 
 	
 	/**
 	 * Current page number

@@ -133,6 +133,9 @@ class BaseController{
 	public $filter_rules = false;
 
 
+
+
+	
 	function __construct(){
 		$this->view = new BaseView; //initialize the view renderer
 

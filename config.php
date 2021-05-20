@@ -92,7 +92,7 @@ define("DB_TYPE", "mysql");
 define("DB_PORT", "3306");
 define("DB_CHARSET", "utf8");
 
-define("MAX_RECORD_COUNT", 20); //Default Max Records to Retrieve  per Page
+define("MAX_RECORD_COUNT", 22); //Default Max Records to Retrieve  per Page
 define("ORDER_TYPE", "DESC");  //Default Order Type
 
 // Active User Profile Details

@@ -3,7 +3,19 @@
 	
 	require('config.php');
 	// for testing 
-	echo SITE_ADDR;
+
+	require(HELPERS_DIR . 'Functions.php');
+	// $get_ip = new 
+	// echo set_flash_msg('echo format_date(datetime_now()',$type = "success", $dismissable = true, $showduration = 5000);
+	echo is_mobile();
+
+	// echo format_date(datetime_now(), $format = 'Y-m-d');
+	// $active_user = get_active_user();
+	// if($active_user == null){
+	// 	echo 'Empty IP';
+	// }else{
+	// 	echo 'Empty IP yess';
+	// }
 	//composer auto load libraries
 	require ('vendor/autoload.php');
 
@@ -81,10 +93,15 @@
 	
 	//whey that needs , its also load from auto loder functions 
 	//Initialize Global Functions Helpers
-	require(HELPERS_DIR . 'Functions.php');
+	// require(HELPERS_DIR . 'Functions.php');
 
 	//autoloadHelper
 	$lang = new Lang;// Initialize language class and load default language phrases
+	// $html = new Html;
+
+	// echo Html::ajaxpage_spinner();
+
+
 	//autoloadLibrary
 	$csrf = new Csrf;// Initialize Csrf class and generate new application token
 	$csrf_token = $csrf::$token; 
