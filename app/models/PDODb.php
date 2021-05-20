@@ -217,6 +217,10 @@ class PDODb
      * @param int $port
      * @param string $charset
      */
+
+
+
+
     public function __construct($type, $host = null, $username = null, $password = null, $dbname = null, $port = null, $charset = null)
     {
         if (is_array($type)) { // if params were passed as array
@@ -255,6 +259,8 @@ class PDODb
     }
 
 	
+
+    
 	/**
      * A method to connect to the database
      *

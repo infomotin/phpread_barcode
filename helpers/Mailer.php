@@ -21,7 +21,7 @@ class Mailer
 
 	public function send_mail($receipient_emails, $subject, $msg)
 	{
-		require_once(LIBS_DIR . 'PHPMailer/PHPMailerAutoload.php');
+		require_once(LIBS_DIR . 'PHPMailer/PHPMailerAutoload.php');//this file from libs folder 
 		$mail = new PHPMailer;
 		if (USE_SMTP == true) {
 			//$mail->SMTPDebug = 3;                               // Enable verbose debug output

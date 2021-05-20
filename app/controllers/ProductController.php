@@ -64,14 +64,6 @@ class ProductController extends BaseController{
 			$to = $vals[1];
 			$db->where("product.product_sel_price BETWEEN $from AND $to");
 		}
-		if(!empty($request->product_product_stock_lavel)){
-			$val = $request->product_product_stock_lavel;
-			$db->where("product.product_stock_lavel", $val , "=");
-		}
-		if(!empty($request->product_product_buy_price)){
-			$val = $request->product_product_buy_price;
-			$db->where("product.product_buy_price", $val , "=");
-		}
 		$tc = $db->withTotalCount();
 		$records = $db->get($tablename, $pagination, $fields);
 		$records_count = count($records);

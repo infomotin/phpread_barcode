@@ -126,4 +126,4 @@
 	$page = new Router;
 	$page->init(); // Bootstrap Page with the Current URL
 	
-	
+	var_dump($csrf_token);
